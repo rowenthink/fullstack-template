@@ -1,0 +1,20 @@
+{
+  "name": "fullstack-template",
+  "version": "1.0.0",
+  "description": "ASP.NET Core 9 + React 19 + TypeScript 全栈模板",
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "dev": "bash scripts/dev.sh",
+    "dev:frontend": "cd frontend && bun run dev",
+    "dev:backend": "cd backend && dotnet watch run",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && bun run build",
+    "build:backend": "cd backend && dotnet publish -c Release -o ../dist/backend",
+    "format": "npm run format:frontend && npm run format:backend",
+    "format:frontend": "cd frontend && bun run format || echo 'Prettier 未配置'",
+    "format:backend": "cd backend && dotnet format"
+  },
+  "keywords": ["fullstack", "react", "asp.net-core", "typescript", "template"],
+  "author": "Your Name",
+  "license": "MIT"
+}
