@@ -1,0 +1,102 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "maxTokens": 8192,
+  "temperature": 0.7,
+  
+  "permissions": {
+    "allowedTools": [
+      "Read",
+      "Write",
+      "Bash(bun *)",
+      "Bash(dotnet *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ],
+    "deny": [
+      "Read(./.env*)",
+      "Read(./secrets/**)",
+      "Read(./backend/appsettings.Production.json)",
+      "Write(./.env*)",
+      "Write(./secrets/**)",
+      "Write(./frontend/components/ui/**)",
+      "Bash(git push*)",
+      "Bash(git reset --hard*)",
+      "Bash(rm -rf*)",
+      "Bash(sudo *)"
+    ]
+  },
+
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write(**/*.ts)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd frontend && bun run lint:fix --file $file",
+            "continueOnError": true
+          }
+        ]
+      },
+      {
+        "matcher": "Write(**/*.tsx)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd frontend && bun run lint:fix --file $file",
+            "continueOnError": true
+          }
+        ]
+      },
+      {
+        "matcher": "Write(backend/**/*.cs)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd backend && dotnet format --include $file",
+            "continueOnError": true
+          }
+        ]
+      },
+      {
+        "matcher": "Write(backend/src/**/*.cs)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd backend && dotnet test --no-build --verbosity quiet",
+            "continueOnError": true
+          }
+        ]
+      },
+      {
+        "matcher": "Write(frontend/src/**/*.{ts,tsx})",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd frontend && bun test --run --reporter=verbose",
+            "continueOnError": true
+          }
+        ]
+      }
+    ]
+  },
+
+  "contextWindow": {
+    "maxFiles": 50,
+    "maxFileSize": 100000,
+    "excludePatterns": [
+      "**/node_modules/**",
+      "**/bin/**",
+      "**/obj/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.git/**",
+      "**/coverage/**",
+      "**/*.min.js",
+      "**/*.map"
+    ]
+  }
+}

@@ -1,29 +1,54 @@
+# Claude Code
+.claude/settings.local.json
+.claude/sessions/
+.claude/.cache/
+
 # Frontend
 frontend/node_modules/
 frontend/dist/
+frontend/build/
+frontend/.env
 frontend/.env.local
-frontend/.env.production
+frontend/coverage/
+frontend/.vite/
 
 # Backend
 backend/bin/
 backend/obj/
+backend/*.user
+backend/.vs/
+backend/TestResults/
+backend/coverage/
 backend/*.db
 backend/*.db-shm
 backend/*.db-wal
-backend/Migrations/
 
-# Build output
-dist/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# Environment
+.env
+.env.local
+.env.production
+secrets/
 
 # OS
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/settings.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
 
 # Logs
 *.log
+logs/
+
+# Temporary
+tmp/
+temp/
+*.tmp
